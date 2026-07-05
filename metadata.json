@@ -1,0 +1,6 @@
+{
+  "name": "amTOP uPVC Profiles",
+  "description": "amTOP is a premier manufacturer of high-performance, lead-free uPVC profiles for world-class windows and doors, utilizing elegant Calcium-Zinc stabilizers.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

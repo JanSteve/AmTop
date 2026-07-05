@@ -1,0 +1,110 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // 1. Global safety net - default deny all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // 2. Global Helper Functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Temporal integrity check helper
+    function isCurrentTime(time) {
+      return time == request.time;
+    }
+
+    // 3. Entity Validation Helpers
+    function isValidBrief(data) {
+      return data.keys().hasAll(['userId', 'brandName', 'brandDescription', 'creativeConcept', 'colors', 'typography', 'strategy', 'createdAt'])
+        && data.keys().size() == 8
+        && data.userId is string
+        && data.userId == request.auth.uid
+        && data.brandName is string
+        && data.brandName.size() <= 200
+        && data.brandDescription is string
+        && data.brandDescription.size() <= 2000
+        && data.creativeConcept is string
+        && data.creativeConcept.size() <= 5000
+        && data.colors is list
+        && data.colors.size() <= 10
+        && data.typography is string
+        && data.typography.size() <= 200
+        && data.strategy is string
+        && data.strategy.size() <= 5000
+        && isCurrentTime(data.createdAt);
+    }
+
+    function isValidFeedbackPin(data) {
+      return data.keys().hasAll(['projectId', 'userId', 'userEmail', 'x', 'y', 'text', 'createdAt'])
+        && data.keys().size() == 7
+        && data.projectId is string
+        && data.projectId.size() <= 100
+        && data.userId is string
+        && data.userId == request.auth.uid
+        && data.userEmail is string
+        && data.userEmail.size() <= 320
+        && data.x is number
+        && data.y is number
+        && data.text is string
+        && data.text.size() <= 1000
+        && isCurrentTime(data.createdAt);
+    }
+
+    function isValidChat(data) {
+      return data.keys().hasAll(['userId', 'userEmail', 'author', 'text', 'role', 'createdAt'])
+        && data.keys().size() == 6
+        && data.userId is string
+        && data.userId == request.auth.uid
+        && data.userEmail is string
+        && data.userEmail.size() <= 320
+        && data.author is string
+        && data.author.size() <= 200
+        && data.text is string
+        && data.text.size() <= 2000
+        && data.role is string
+        && (data.role == 'client' || data.role == 'agency')
+        && isCurrentTime(data.createdAt);
+    }
+
+    // 4. Briefs Rules
+    match /briefs/{briefId} {
+      allow read: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() && isValidBrief(request.resource.data);
+      allow update: if isSignedIn() 
+        && resource.data.userId == request.auth.uid
+        && isValidBrief(request.resource.data)
+        && request.resource.data.userId == resource.data.userId;
+      allow delete: if isSignedIn() && resource.data.userId == request.auth.uid;
+    }
+
+    // 5. FeedbackPins Rules
+    match /feedbackPins/{pinId} {
+      allow read: if isSignedIn(); // All authenticated clients in workspace can see collaboration pins
+      allow create: if isSignedIn() && isValidFeedbackPin(request.resource.data);
+      allow update: if isSignedIn() 
+        && resource.data.userId == request.auth.uid
+        && isValidFeedbackPin(request.resource.data)
+        && request.resource.data.userId == resource.data.userId;
+      allow delete: if isSignedIn() && resource.data.userId == request.auth.uid;
+    }
+
+    // 6. Chats Rules
+    match /chats/{chatId} {
+      allow read: if isSignedIn(); // All authenticated clients can read shared team activity stream
+      allow create: if isSignedIn() && isValidChat(request.resource.data);
+      allow delete: if isSignedIn() && resource.data.userId == request.auth.uid;
+    }
+  }
+}
