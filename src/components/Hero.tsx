@@ -79,10 +79,10 @@ export default function Hero() {
       <div className="absolute bottom-1/4 right-1/10 w-[450px] h-[450px] bg-cyan-300/5 rounded-full blur-[140px] pointer-events-none"></div>
 
       {/* 2-Column Horizontal Split Page Layout */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center relative z-10 text-left mt-8 mb-12 flex-grow">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center relative z-10 text-left mt-8 mb-12 flex-grow">
         
-        {/* Left Column: 55% space (col-span-7) containing separate semantic divs */}
-        <div className="lg:col-span-7 flex flex-col items-start text-left w-full gap-6">
+        {/* Left Column: 41.6% space (col-span-5) containing separate semantic divs */}
+        <div className="lg:col-span-5 flex flex-col items-start text-left w-full gap-6">
           
           {/* Div 1: Floating Tag Component */}
           <div className="w-full">
@@ -163,8 +163,8 @@ export default function Hero() {
 
         </div>
 
-        {/* Right Column: 45% space (col-span-5) containing side-by-side Video Player Frame */}
-        <div className="lg:col-span-5 w-full flex justify-center lg:justify-end">
+        {/* Right Column: 58.3% space (col-span-7) containing side-by-side Video Player Frame */}
+        <div className="lg:col-span-7 w-full flex justify-center lg:justify-end">
           <motion.div
             id="hero-video-showcase"
             style={{ y: phoneY }}
@@ -190,35 +190,8 @@ export default function Hero() {
               <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-24 h-1 rounded-full bg-zinc-600/60 pointer-events-none" />
 
               {/* iPad Screen Area */}
-              <div className="relative w-full bg-[#0d0d10] rounded-2xl aspect-[4/3] sm:aspect-[16/10] md:aspect-[4/3] shadow-inner overflow-hidden group">
-                {/* YouTube Title & Channel Bar (Header) */}
-                <div className="absolute top-0 inset-x-0 bg-gradient-to-b from-black/80 via-black/30 to-transparent p-4 z-20 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-full bg-zinc-800 border border-white/10 flex items-center justify-center font-display font-medium text-xs text-white">
-                      aT
-                    </div>
-                    <div className="text-left">
-                      <h4 className="text-xs font-semibold text-white tracking-wide">amTOP — System Demo (Automated ROI)</h4>
-                      <p className="text-[9px] text-zinc-400 font-mono">1.2k views • Active Now</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-[9px] bg-red-600 text-white font-mono font-bold px-1.5 py-0.5 rounded-sm">LIVE</span>
-                  </div>
-                </div>
-
-                {/* Central Large Semi-transparent Play Button overlay if paused */}
-                {!isPlaying && (
-                  <button
-                    id="center-play-trigger-btn"
-                    onClick={() => setIsPlaying(true)}
-                    className="absolute inset-0 m-auto w-16 h-16 rounded-full bg-black/60 hover:bg-red-600 hover:scale-105 backdrop-blur-md flex items-center justify-center border border-white/20 text-white cursor-pointer active:scale-95 transition-all duration-300 z-30 shadow-2xl"
-                    aria-label="Play video"
-                  >
-                    <Play className="w-6 h-6 fill-white text-white translate-x-0.5" />
-                  </button>
-                )}
-
+              <div className="relative w-full bg-[#0d0d10] rounded-2xl aspect-[4/3] shadow-inner overflow-hidden group">
+                
                 {/* Real Video Component Screen */}
                 <div className="absolute inset-0 z-0">
                   <video
@@ -235,151 +208,61 @@ export default function Hero() {
                   <div className="absolute inset-0 bg-black/35 mix-blend-multiply"></div>
                 </div>
 
-                {/* Interactive Simulated Video Overlay Graphics */}
-                {isPlaying && (
-                  <div className="absolute inset-0 z-10 flex flex-col justify-between p-4 pt-16 pointer-events-none">
-                    <div className="flex items-center justify-between">
-                      <motion.div
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="flex items-center gap-1.5 px-2 py-1 bg-black/60 backdrop-blur-xs rounded-full text-[9px] font-mono text-white tracking-widest uppercase"
-                      >
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
-                        amTOP System Active
-                      </motion.div>
-                      <motion.div
-                        initial={{ opacity: 0, x: 10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="flex items-center gap-1 text-[10px] font-mono text-white/90"
-                      >
-                        <span>AGENTIC</span>
-                      </motion.div>
-                    </div>
-
-                    {/* Floating graphic cards that react to the mock player */}
-                    <div className="flex gap-4 mb-4">
-                      <motion.div
-                        initial={{ opacity: 0, y: 15 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3 }}
-                        className="p-2.5 bg-white/95 backdrop-blur-md rounded-xl shadow-md border border-black/10 flex items-center gap-2 max-w-[200px]"
-                      >
-                        <span className="w-6 h-6 rounded-full bg-black/5 flex items-center justify-center font-display font-bold text-[10px] text-black">
-                          aT
-                        </span>
-                        <div className="leading-tight text-left">
-                          <p className="text-[10px] font-bold text-black">Meta Ads ROI</p>
-                          <p className="text-[8px] text-zinc-500">Campaign automated</p>
-                        </div>
-                        <span className="text-[10px] font-mono font-bold text-emerald-600 ml-auto">4.8x</span>
-                      </motion.div>
-
-                      <motion.div
-                        initial={{ opacity: 0, y: 15 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.6 }}
-                        className="p-2.5 bg-white/95 backdrop-blur-md rounded-xl shadow-md border border-black/10 flex items-center gap-2 max-w-[180px]"
-                      >
-                        <div className="leading-tight text-left">
-                          <p className="text-[10px] font-bold text-black">SEO Traffic</p>
-                          <p className="text-[8px] text-zinc-500">Organic authority</p>
-                        </div>
-                        <span className="text-[9px] font-mono bg-emerald-500/10 text-emerald-600 px-1.5 py-0.5 rounded-sm ml-auto">
-                          +32% MoM
-                        </span>
-                      </motion.div>
-                    </div>
-                  </div>
-                )}
-
-                {/* YouTube-Style Controls Overlay (Footer) */}
-                <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-4 z-20 flex flex-col gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  
-                  {/* Playback Timeline Slider with YouTube Red/Gray fill style */}
-                  <div className="relative group/slider flex items-center w-full">
-                    <input
-                      id="hero-playback-slider"
-                      type="range"
-                      min="0"
-                      max="100"
-                      value={progress}
-                      onChange={handleProgressChange}
-                      className="w-full h-1 bg-white/30 rounded-lg appearance-none cursor-pointer accent-red-600 focus:outline-hidden relative z-10 hover:h-1.5 transition-all duration-150"
-                    />
-                    {/* Red Progress Indicator */}
-                    <div
-                      className="absolute top-1/2 -translate-y-1/2 left-0 h-1 bg-red-600 rounded-lg pointer-events-none group-hover/slider:h-1.5 transition-all duration-150"
-                      style={{ width: `${progress}%` }}
-                    ></div>
-                  </div>
-
-                  {/* Left/Right Control row */}
+                {/* Interactive Simulated Video Overlay Graphics - beautifully styled and permanently active */}
+                <div className="absolute inset-0 z-10 flex flex-col justify-between p-5 pointer-events-none">
                   <div className="flex items-center justify-between">
-                    {/* Left Controls: Play/Pause, Sound, Time */}
-                    <div className="flex items-center gap-4">
-                      <button
-                        id="play-pause-showcase-btn"
-                        onClick={() => setIsPlaying(!isPlaying)}
-                        className="text-white hover:text-red-500 hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer"
-                        aria-label={isPlaying ? 'Pause simulation' : 'Play simulation'}
-                      >
-                        {isPlaying ? (
-                          <Pause className="w-5 h-5 fill-white text-white" />
-                        ) : (
-                          <Play className="w-5 h-5 fill-white text-white translate-x-0.5" />
-                        )}
-                      </button>
-
-                      <button
-                        id="sound-toggle-btn"
-                        onClick={() => setIsMuted(!isMuted)}
-                        className="text-white/90 hover:text-white transition-colors cursor-pointer"
-                        aria-label={isMuted ? 'Unmute' : 'Mute'}
-                      >
-                        {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-                      </button>
-
-                      <div className="text-[11px] font-mono text-white/85">
-                        <span>
-                          {videoRef.current
-                            ? `${Math.floor(videoRef.current.currentTime / 60)}:${Math.floor(
-                                videoRef.current.currentTime % 60
-                              )
-                                .toString()
-                                .padStart(2, '0')}`
-                            : '0:00'}
-                        </span>
-                        <span className="mx-1 text-white/30">/</span>
-                        <span>
-                          {videoRef.current && videoRef.current.duration
-                            ? `${Math.floor(videoRef.current.duration / 60)}:${Math.floor(
-                                videoRef.current.duration % 60
-                              )
-                                .toString()
-                                .padStart(2, '0')}`
-                            : '0:15'}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Right Controls: HD Tag, Settings, Fullscreen mock */}
-                    <div className="flex items-center gap-3">
-                      <span className="text-[9px] border border-white/30 px-1 py-0.2 rounded-xs font-mono font-bold text-white/90">HD</span>
-                      
-                      {/* Settings cog mock */}
-                      <svg className="w-4 h-4 text-white/80 hover:text-white transition-colors cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-
-                      {/* Fullscreen mock */}
-                      <svg className="w-4 h-4 text-white/80 hover:text-white transition-colors cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 8V4h4M4 16v4h4M20 8V4h-4M20 16v4h-4" />
-                      </svg>
-                    </div>
+                    <motion.div
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className="flex items-center gap-1.5 px-2.5 py-1 bg-black/60 backdrop-blur-xs rounded-full text-[9px] font-mono text-white tracking-widest uppercase"
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                      amTOP System Active
+                    </motion.div>
+                    <motion.div
+                      initial={{ opacity: 0, x: 10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className="flex items-center gap-1 text-[10px] font-mono text-white/95 font-bold tracking-widest"
+                    >
+                      <span>AGENTIC</span>
+                    </motion.div>
                   </div>
 
+                  {/* Floating graphic cards that react to the mock player */}
+                  <div className="flex flex-wrap gap-4 mb-2">
+                    <motion.div
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 }}
+                      className="p-3 bg-white/95 backdrop-blur-md rounded-xl shadow-lg border border-black/10 flex items-center gap-2.5 max-w-[220px]"
+                    >
+                      <span className="w-7 h-7 rounded-full bg-black/5 flex items-center justify-center font-display font-bold text-xs text-black">
+                        aT
+                      </span>
+                      <div className="leading-tight text-left">
+                        <p className="text-[11px] font-bold text-black font-sans">Meta Ads ROI</p>
+                        <p className="text-[9px] text-zinc-500 font-sans">Campaign automated</p>
+                      </div>
+                      <span className="text-xs font-mono font-bold text-emerald-600 ml-auto">4.8x</span>
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.6 }}
+                      className="p-3 bg-white/95 backdrop-blur-md rounded-xl shadow-lg border border-black/10 flex items-center gap-2.5 max-w-[200px]"
+                    >
+                      <div className="leading-tight text-left">
+                        <p className="text-[11px] font-bold text-black font-sans">SEO Traffic</p>
+                        <p className="text-[9px] text-zinc-500 font-sans">Organic authority</p>
+                      </div>
+                      <span className="text-[10px] font-mono bg-emerald-500/10 text-emerald-600 px-2 py-0.5 rounded-md ml-auto font-bold">
+                        +32% MoM
+                      </span>
+                    </motion.div>
+                  </div>
                 </div>
+
               </div>
             </div>
           </motion.div>
